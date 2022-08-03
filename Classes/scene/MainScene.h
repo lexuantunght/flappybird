@@ -18,6 +18,7 @@ private:
     BirdController* birdController;
     Layer* mainLayer;
     void initMainLayer();
+    void initSounds();
     bool handleTouchMainLayer(Touch* touch, Event* event);
     bool handleCollide(PhysicsContact& contact);
 public:

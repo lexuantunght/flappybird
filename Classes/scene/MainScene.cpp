@@ -1,4 +1,4 @@
-#include "SimpleAudioEngine.h"
+#include "AudioEngine.h"
 #include "MainScene.h"
 #include "../common/GameConstants.h"
 
@@ -14,6 +14,7 @@ bool MainScene::init()
         return false;
     }
 
+    this->initSounds();
     this->initMainLayer();
     this->scheduleUpdate();
  
@@ -56,7 +57,7 @@ bool MainScene::handleTouchMainLayer(Touch* touch, Event* event)
 {
     auto birdPhysicsBody = birdController->getBird()->getPhysicsBody();
     if (birdPhysicsBody->getVelocity().y <= 0) {
-        CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("sounds/wing.wav");
+        experimental::AudioEngine::play2d("sounds/wing.mp3");
         birdPhysicsBody->applyImpulse(Vec2(0, 30000));
     }
     return true;
@@ -68,8 +69,8 @@ bool MainScene::handleCollide(PhysicsContact& contact)
     auto tagB = contact.getShapeB()->getBody()->getTag();
     if (tagA == GameConstants::BIRD_TAG || tagB == GameConstants::BIRD_TAG)
     {
-        CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("sounds/hit.wav");
-        CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("sounds/die.wav");
+        experimental::AudioEngine::play2d("sounds/hit.mp3");
+        experimental::AudioEngine::play2d("sounds/die.mp3");
         this->unscheduleUpdate();
         birdController->getBird()->stopAllActions();
         this->getPhysicsWorld()->setSpeed(0);
@@ -77,9 +78,17 @@ bool MainScene::handleCollide(PhysicsContact& contact)
     return true;
 }
 
+void MainScene::initSounds()
+{
+    experimental::AudioEngine::preload("sounds/wing.mp3");
+    experimental::AudioEngine::preload("sounds/hit.mp3");
+    experimental::AudioEngine::preload("sounds/point.mp3");
+    experimental::AudioEngine::preload("sounds/die.mp3");
+}
+
 void MainScene::update(float dt)
 {
+    pipeController->update(dt);
     mapController->update(dt);
     baseGroundController->update(dt);
-    pipeController->update(dt);
 }

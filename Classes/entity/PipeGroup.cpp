@@ -2,6 +2,7 @@
 
 PipeGroup::PipeGroup(const std::string filename)
 {
+	isPassed = false;
 	topPipe = new Pipe(filename);
 	topPipe->setFlippedY(true);
 	topPipe->setPhysicsBody(PhysicsBody::createBox(topPipe->getContentSize()));
@@ -31,4 +32,14 @@ Pipe* PipeGroup::getTopPipe()
 Pipe* PipeGroup::getBotPipe()
 {
 	return botPipe;
+}
+
+bool PipeGroup::getIsPassed()
+{
+	return isPassed;
+}
+
+void PipeGroup::setIsPassed(bool passed)
+{
+	isPassed = passed;
 }

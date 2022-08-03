@@ -9,10 +9,12 @@ class PipeController : public Node
 private:
 	Vector<PipeGroup*> pipes;
 	int speed;
+	int passed;
 public:
 	PipeController();
 	void update(float dt);
 	void setSpeed(int speed);
 	int getSpeed();
+	int getPassed();
 };
 
