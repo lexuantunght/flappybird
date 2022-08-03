@@ -151,15 +151,27 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\Classes\AppDelegate.cpp" />
+    <ClCompile Include="..\Classes\common\GameConstants.cpp" />
+    <ClCompile Include="..\Classes\controller\BaseGroundController.cpp" />
+    <ClCompile Include="..\Classes\controller\BirdController.cpp" />
+    <ClCompile Include="..\Classes\controller\MapController.cpp" />
+    <ClCompile Include="..\Classes\controller\PipeController.cpp" />
     <ClCompile Include="..\Classes\entity\Bird.cpp" />
     <ClCompile Include="..\Classes\entity\Pipe.cpp" />
+    <ClCompile Include="..\Classes\entity\PipeGroup.cpp" />
     <ClCompile Include="..\Classes\scene\MainScene.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Classes\AppDelegate.h" />
+    <ClInclude Include="..\Classes\common\GameConstants.h" />
+    <ClInclude Include="..\Classes\controller\BaseGroundController.h" />
+    <ClInclude Include="..\Classes\controller\BirdController.h" />
+    <ClInclude Include="..\Classes\controller\MapController.h" />
+    <ClInclude Include="..\Classes\controller\PipeController.h" />
     <ClInclude Include="..\Classes\entity\Bird.h" />
     <ClInclude Include="..\Classes\entity\Pipe.h" />
+    <ClInclude Include="..\Classes\entity\PipeGroup.h" />
     <ClInclude Include="..\Classes\scene\MainScene.h" />
     <ClInclude Include="main.h" />
   </ItemGroup>

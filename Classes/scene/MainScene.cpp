@@ -1,8 +1,6 @@
+#include "SimpleAudioEngine.h"
 #include "MainScene.h"
-#include "../entity/Bird.h"
-#include "../entity/Pipe.h"
-
-USING_NS_CC;
+#include "../common/GameConstants.h"
 
 Scene* MainScene::createScene()
 {
@@ -11,31 +9,77 @@ Scene* MainScene::createScene()
 
 bool MainScene::init()
 {
-    if (!Scene::init())
+    if (!Scene::initWithPhysics())
     {
         return false;
     }
 
-    const auto visibleSize = Director::getInstance()->getVisibleSize();
-    const Vec2 origin = Director::getInstance()->getVisibleOrigin();
+    this->initMainLayer();
+    this->scheduleUpdate();
+ 
+    return true;
+}
+
+void MainScene::initMainLayer()
+{
+    mainLayer = Layer::create();
 
     // init map
-    auto background = TMXTiledMap::create("background.tmx");
-    background->setScale(visibleSize.height / background->getContentSize().height);
-    this->addChild(background, 0, 99);
+    mapController = new MapController();
+    mainLayer->addChild(mapController);
 
     // init bird
-    auto bird = new Bird("yellowbird-midflap.png");
-    bird->setAnimation("bird-fly.plist", "bird-fly.png", 4, 0.15);
-    bird->setPosition(Vec2(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));
-    bird->setScale(1.5);
-    this->addChild(bird);
+    birdController = new BirdController();
+    mainLayer->addChild(birdController);
 
     // init pipe
-    auto pipe = new Pipe("pipe-green.png");
-    pipe->setPosition(Vec2(visibleSize.width / 2 + origin.x + 100, visibleSize.height / 2 + origin.y));
-    pipe->setScale(1.5);
-    this->addChild(pipe);
-    
+    pipeController = new PipeController();
+    mainLayer->addChild(pipeController);
+
+    // init base ground
+    baseGroundController = new BaseGroundController();
+    mainLayer->addChild(baseGroundController);
+
+    this->addChild(mainLayer);
+
+    auto listener = EventListenerTouchOneByOne::create();
+    listener->setSwallowTouches(false);
+    listener->onTouchBegan = CC_CALLBACK_2(MainScene::handleTouchMainLayer, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, mainLayer);
+
+    auto contactListener = EventListenerPhysicsContact::create();
+    contactListener->onContactBegin = CC_CALLBACK_1(MainScene::handleCollide, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(contactListener, mainLayer);
+}
+
+bool MainScene::handleTouchMainLayer(Touch* touch, Event* event) 
+{
+    auto birdPhysicsBody = birdController->getBird()->getPhysicsBody();
+    if (birdPhysicsBody->getVelocity().y <= 0) {
+        CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("sounds/wing.wav");
+        birdPhysicsBody->applyImpulse(Vec2(0, 30000));
+    }
     return true;
+}
+
+bool MainScene::handleCollide(PhysicsContact& contact)
+{
+    auto tagA = contact.getShapeA()->getBody()->getTag();
+    auto tagB = contact.getShapeB()->getBody()->getTag();
+    if (tagA == GameConstants::BIRD_TAG || tagB == GameConstants::BIRD_TAG)
+    {
+        CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("sounds/hit.wav");
+        CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("sounds/die.wav");
+        this->unscheduleUpdate();
+        birdController->getBird()->stopAllActions();
+        this->getPhysicsWorld()->setSpeed(0);
+    }
+    return true;
+}
+
+void MainScene::update(float dt)
+{
+    mapController->update(dt);
+    baseGroundController->update(dt);
+    pipeController->update(dt);
 }

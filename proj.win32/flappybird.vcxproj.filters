@@ -16,6 +16,12 @@
     <Filter Include="src\scene">
       <UniqueIdentifier>{cf604ace-22cb-4d7e-8833-968d704378d6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\controller">
+      <UniqueIdentifier>{423d3db2-460f-4ff1-aa2f-fe3d9c67b041}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\common">
+      <UniqueIdentifier>{0e3b622a-5aed-401c-bc33-4755ba377b66}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -33,6 +39,24 @@
     <ClCompile Include="..\Classes\scene\MainScene.cpp">
       <Filter>src\scene</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\entity\PipeGroup.cpp">
+      <Filter>src\entity</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\controller\PipeController.cpp">
+      <Filter>src\controller</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\controller\MapController.cpp">
+      <Filter>src\controller</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\controller\BaseGroundController.cpp">
+      <Filter>src\controller</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\controller\BirdController.cpp">
+      <Filter>src\controller</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\common\GameConstants.cpp">
+      <Filter>src\common</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -49,6 +73,24 @@
     </ClInclude>
     <ClInclude Include="..\Classes\scene\MainScene.h">
       <Filter>src\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\entity\PipeGroup.h">
+      <Filter>src\entity</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\controller\PipeController.h">
+      <Filter>src\controller</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\controller\MapController.h">
+      <Filter>src\controller</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\controller\BaseGroundController.h">
+      <Filter>src\controller</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\controller\BirdController.h">
+      <Filter>src\controller</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\common\GameConstants.h">
+      <Filter>src\common</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

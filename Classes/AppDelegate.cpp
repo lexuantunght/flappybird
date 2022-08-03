@@ -119,6 +119,8 @@ bool AppDelegate::applicationDidFinishLaunching() {
 
     // create a scene. it's an autorelease object
     auto scene = MainScene::createScene();
+    scene->getPhysicsWorld()->setGravity(Vec2(0, -360));
+    //scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
 
     // run
     director->runWithScene(scene);
